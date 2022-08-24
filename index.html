@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="style.css" />
   <title>Document</title>
 </head>
+
 <header class="cabecalho">
   <div class="logo">
     <img src="./imgs/logo 1.png" alt="logotipo batepapo Uol" />
@@ -22,20 +23,14 @@
 </header>
 
 <body>
-  <div class="mensagem mensagem-entrada">
-    <span class="horario">(22:10:32)</span></span0>
-    <p class="nome">Bruno</p>
-    <p class="post">entra na sala...</p>
-  </div>
-  <div class="mensagem mensagem-post">
-    <span class="horario">(22:10:32)</span></span0>
-    <p class="nome">Bruno:</p>
-    <p class="post">Oi, tudo bem?</p>
-  </div>
-  <div class="mensagem mensagem-reservada">
-    <span class="horario">(22:10:32)</span></span0>
-    <p class="nome">Bruno:</p>
-    <p class="post">Oi, tudo bem?</p>
+  <div class="inicio-container hidden">
+    <div class="inicio-imagem">
+      <img src="/imgs/logo 2.png" alt="logo batepapo Uol">
+    </div>
+    <div class="inicio-entrada">
+      <input type="text" class="inicio-input" placeholder="Digite seu nome">
+      <button class="inicio-botao">Entrar</button>
+    </div>
   </div>
   <div class="modal hidden">
     <div class="container-modal">
@@ -84,13 +79,31 @@
           <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
         </div>
       </div>
-    </div class="modal">
+    </div>
+  </div>
+  <div class="mensagens">
+  <div class="mensagem mensagem-entrada">
+    <span class="horario">(22:10:32)</span></span0>
+    <p class="nome">Bruno</p>
+    <p class="post">entra na sala...</p>
+  </div>
+  <div class="mensagem mensagem-post">
+    <span class="horario">(22:10:32)</span></span0>
+    <p class="nome">Bruno:</p>
+    <p class="post">Oi, tudo bem?</p>
+  </div>
+  <div class="mensagem mensagem-reservada">
+    <span class="horario">(22:10:32)</span></span0>
+    <p class="nome">Bruno:</p>
+    <p class="post">Oi, tudo bem?</p>
+  </div>
+  </div>
 </body>
 
 <footer>
   <input type="text" class="input" placeholder="Escreva aqui...">
   <ion-icon class="icone-footer" name="paper-plane-outline"></ion-icon>
 </footer>
-<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </html>
