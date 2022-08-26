@@ -17,12 +17,9 @@ function pegarMensagens() {
   );
   promessa.then(mostrarMenssagens);
 }
-pegarMensagens();
-setInterval(pegarMensagens, 3000);
 
 function mostrarMenssagens(resposta) {
   dados = resposta.data;
-  console.log(resposta.data);
   mensagens.innerHTML = "";
   for (let i = 0; i < dados.length; i++) {
     const tipo = dados[i].type;
@@ -31,7 +28,6 @@ function mostrarMenssagens(resposta) {
     const horario = dados[i].time;
     const destinatario = dados[i].to;
     destinatarios.push(nome);
-    destinatariosUnicos = [...new Set(destinatarios)];
     let ultimo;
     if (tipo === "status") {
       mensagem = `<li class='mensagem mensagem-${tipo} id${i}' > 
@@ -56,6 +52,13 @@ function mostrarMenssagens(resposta) {
     ultimo = document.querySelector(`.id${i}`);
     ultimo.scrollIntoView();
   }
+  destinatariosUnicos = [...new Set(destinatarios)];
+  destinatariosUnicos = destinatariosUnicos.filter(tirarMeuNome);
+}
+
+function tirarMeuNome(meuNome) {
+  const nome = document.querySelector(".inicio-input").value;
+  return (meuNome !== nome);
 }
 
 function mostrarDestinatarios() {
@@ -93,8 +96,10 @@ function iniciar() {
 function podeEntrar() {
   document.querySelector(".inicio-container").classList.add("hidden");
   requisicaoContinua();
-  setInterval(requisicaoContinua, 5000);
+  pegarMensagens();
   mostrarDestinatarios();
+  setInterval(requisicaoContinua, 5000);
+  setInterval(pegarMensagens, 3000);
   setInterval(mostrarDestinatarios, 10000);
 }
 
