@@ -19,7 +19,7 @@
     <div class="logo">
       <img src="./imgs/logo 1.png" alt="logotipo batepapo Uol" />
     </div>
-    <ion-icon class="icone-header" name="people"></ion-icon>
+    <ion-icon class="icone-header" name="people" onclick="toggleModal()"></ion-icon>
   </header>
 
   <body>
@@ -34,60 +34,29 @@
         </button>
       </div>
     </div>
-    <div class="modal hidden">
-      <div class="container-modal">
+    <div class="modal hidden" onclick="toggleModal()">
+      <div class="container-modal" onclick="toggleModal()">
         <div class="titulo-modal">
           <p class="texto-topo-modal">
             Escolha um contato para enviar mensagem:
           </p>
         </div>
-        <div class="contatos-modal">
-          <div class="contato-modal">
-            <div class="separa-modal">
-              <ion-icon class="icone-modal" name="people"></ion-icon>
-              <p class="nome-modal">Todos</p>
-            </div>
-            <ion-icon
-              class="icone-check hidden"
-              name="checkmark-outline"
-            ></ion-icon>
-          </div>
-          <div class="contato-modal">
-            <div class="separa-modal">
-              <ion-icon class="icone-modal" name="person-circle"></ion-icon>
-              <p class="nome-modal">Todos</p>
-            </div>
-            <ion-icon
-              class="icone-check hidden"
-              name="checkmark-outline"
-            ></ion-icon>
-          </div>
-          <div class="contato-modal">
-            <div class="separa-modal">
-              <ion-icon class="icone-modal" name="person-circle"></ion-icon>
-              <p class="nome-modal">Todos</p>
-            </div>
-            <ion-icon
-              class="icone-check hidden"
-              name="checkmark-outline"
-            ></ion-icon>
-          </div>
-        </div>
+        <ul class="contatos-modal"></ul>
         <div class="titulo-modal">
           <p class="texto-topo-modal">Escolha a visibilidade:</p>
         </div>
-        <div class="contatos-modal">
-          <div class="contato-modal">
+        <ul class="modos-modal">
+          <li class="modo-modal" onclick="marcarModo(this)">
             <div class="separa-modal">
               <ion-icon class="icone-modal" name="lock-open"></ion-icon>
               <p class="nome-modal">Publico</p>
             </div>
             <ion-icon
-              class="icone-check hidden"
+              class="icone-check hidden modo-marcado"
               name="checkmark-outline"
             ></ion-icon>
-          </div>
-          <div class="contato-modal">
+          </li>
+          <li class="modo-modal" onclick="marcarModo(this)">
             <div class="separa-modal">
               <ion-icon class="icone-modal" name="lock-open"></ion-icon>
               <p class="nome-modal">Reservado</p>
@@ -96,8 +65,8 @@
               class="icone-check hidden"
               name="checkmark-outline"
             ></ion-icon>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
     <ul class="mensagens">

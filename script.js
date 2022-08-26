@@ -1,19 +1,28 @@
 let dados = [];
+let destinatarios = [];
+let destinatariosUnicos = [];
+let modos = [];
 
 const mensagens = document.querySelector(".mensagens");
 mensagens.innerHTML = "";
 let mensagem = "";
 
+const contatos = document.querySelector(".contatos-modal");
+contatos.innerHTML = "";
+let contato = "";
+
 function pegarMensagens() {
   const promessa = axios.get(
     "https://mock-api.driven.com.br/api/v6/uol/messages"
   );
-  promessa.then(mensagensRecebidas);
+  promessa.then(mostrarMenssagens);
 }
+pegarMensagens();
 setInterval(pegarMensagens, 3000);
 
-function mensagensRecebidas(resposta) {
+function mostrarMenssagens(resposta) {
   dados = resposta.data;
+  console.log(resposta.data);
   mensagens.innerHTML = "";
   for (let i = 0; i < dados.length; i++) {
     const tipo = dados[i].type;
@@ -21,8 +30,11 @@ function mensagensRecebidas(resposta) {
     const post = dados[i].text;
     const horario = dados[i].time;
     const destinatario = dados[i].to;
+    destinatarios.push(nome);
+    destinatariosUnicos = [...new Set(destinatarios)];
+    let ultimo;
     if (tipo === "status") {
-      mensagem = `<li class='mensagem mensagem-${tipo}'> 
+      mensagem = `<li class='mensagem mensagem-${tipo} id${i}' > 
         <span class='textos-mensagem'>
             <span class='horario'>(${horario})</span>
             <span class='nome'>&nbsp${nome}&nbsp</span>
@@ -30,7 +42,7 @@ function mensagensRecebidas(resposta) {
         </span>
     </li>`;
     } else {
-      mensagem = `<li class='mensagem mensagem-${tipo}'> 
+      mensagem = `<li class='mensagem mensagem-${tipo} id${i}' > 
         <span class='textos-mensagem'>
             <span class='horario'>(${horario})</span>
             <span class='nome'>&nbsp${nome}</span>
@@ -41,6 +53,30 @@ function mensagensRecebidas(resposta) {
     </li>`;
     }
     mensagens.innerHTML = mensagens.innerHTML + mensagem;
+    ultimo = document.querySelector(`.id${i}`);
+    ultimo.scrollIntoView();
+  }
+}
+
+function mostrarDestinatarios() {
+  contatos.innerHTML = `
+    <li class="contato-modal" onclick="marcarDestinatario(this)">
+      <div class="separa-modal">
+        <ion-icon class="icone-modal" name="people"></ion-icon>
+        <p class="nome-modal">Todos</p>
+      </div>
+      <ion-icon class="icone-check hidden dest-marcado" name="checkmark-outline"></ion-icon>
+    </li>`;
+  for (let i = 0; i < destinatariosUnicos.length; i++) {
+    contato = `
+    <li class="contato-modal" onclick="marcarDestinatario(this)">
+      <div class="separa-modal">
+        <ion-icon class="icone-modal" name="person-circle"></ion-icon>
+        <p class="nome-modal">${destinatariosUnicos[i]}</p>
+      </div>
+      <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
+    </li>`;
+    contatos.innerHTML = contatos.innerHTML + contato;
   }
 }
 
@@ -56,7 +92,10 @@ function iniciar() {
 
 function podeEntrar() {
   document.querySelector(".inicio-container").classList.add("hidden");
+  requisicaoContinua();
   setInterval(requisicaoContinua, 5000);
+  mostrarDestinatarios();
+  setInterval(mostrarDestinatarios, 10000);
 }
 
 function requisicaoContinua() {
@@ -90,11 +129,19 @@ function mensagensErro() {
 function enviarMensagem() {
   const nome = document.querySelector(".inicio-input").value;
   const texto = document.querySelector(".input").value;
+  let destinatario = "Todos";
+  let tipo= "message";
+  const destMarcado = document.querySelector(".dest-marcado");
+  destinatario = destMarcado.parentElement.querySelector(".nome-modal").innerHTML;
+  const modoMarcado = document.querySelector(".modo-marcado");
+  if (modoMarcado.parentElement.querySelector(".nome-modal").innerHTML === "Reservado") {
+    tipo = "private_message"
+  } 
   const dados = {
     from: nome,
-    to: "Todos",
+    to: destinatario,
     text: texto,
-    type: "message",
+    type: tipo,
   };
   const requisicao = axios.post(
     "https://mock-api.driven.com.br/api/v6/uol/messages",
@@ -106,4 +153,22 @@ function enviarMensagem() {
 
 function atualizarMensagens() {
   pegarMensagens();
+}
+
+function toggleModal() {
+  document.querySelector(".modal").classList.toggle("hidden");
+}
+
+function marcarDestinatario(contato) {
+  if (document.querySelector(".dest-marcado") !== null) {
+    document.querySelector(".dest-marcado").classList.remove("dest-marcado");
+  }
+  contato.querySelector(".icone-check").classList.add("dest-marcado");
+}
+
+function marcarModo(modo) {
+  if (document.querySelector(".modo-marcado") !== null) {
+    document.querySelector(".modo-marcado").classList.remove("modo-marcado");
+  }
+  modo.querySelector(".icone-check").classList.add("modo-marcado");
 }
