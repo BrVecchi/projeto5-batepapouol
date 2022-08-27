@@ -21,6 +21,7 @@ function pegarMensagens() {
 function mostrarMenssagens(resposta) {
   dados = resposta.data;
   mensagens.innerHTML = "";
+  const meuNome = document.querySelector(".inicio-input").value;
   for (let i = 0; i < dados.length; i++) {
     const tipo = dados[i].type;
     const nome = dados[i].from;
@@ -37,6 +38,8 @@ function mostrarMenssagens(resposta) {
             <span class='post'>${post}</span>
         </span>
     </li>`;
+    } else if ((tipo = "private_message" && destinatario !== meuNome)) {
+      console.log("tirei uma");
     } else {
       mensagem = `<li class='mensagem mensagem-${tipo} id${i}' > 
         <span class='textos-mensagem'>
@@ -58,7 +61,7 @@ function mostrarMenssagens(resposta) {
 
 function tirarMeuNome(meuNome) {
   const nome = document.querySelector(".inicio-input").value;
-  return (meuNome !== nome);
+  return meuNome !== nome;
 }
 
 function mostrarDestinatarios() {
@@ -135,13 +138,17 @@ function enviarMensagem() {
   const nome = document.querySelector(".inicio-input").value;
   const texto = document.querySelector(".input").value;
   let destinatario = "Todos";
-  let tipo= "message";
+  let tipo = "message";
   const destMarcado = document.querySelector(".dest-marcado");
-  destinatario = destMarcado.parentElement.querySelector(".nome-modal").innerHTML;
+  destinatario =
+    destMarcado.parentElement.querySelector(".nome-modal").innerHTML;
   const modoMarcado = document.querySelector(".modo-marcado");
-  if (modoMarcado.parentElement.querySelector(".nome-modal").innerHTML === "Reservado") {
-    tipo = "private_message"
-  } 
+  if (
+    modoMarcado.parentElement.querySelector(".nome-modal").innerHTML ===
+    "Reservado"
+  ) {
+    tipo = "private_message";
+  }
   const dados = {
     from: nome,
     to: destinatario,
