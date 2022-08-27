@@ -174,7 +174,7 @@ function atualizarAtivo() {
 }
 
 function iniciar() {
-  document.querySelector(".inicio-imagem").innerHTML =
+  document.querySelector(".troca").innerHTML =
     "<img src='./imgs/loading-bar.gif' alt='logo batepapo Uol' />";
   const nome = document.querySelector(".inicio-input").value;
   const requisicao = axios.post(
