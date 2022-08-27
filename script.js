@@ -11,6 +11,8 @@ const contatos = document.querySelector(".contatos-modal");
 contatos.innerHTML = "";
 let contato = "";
 
+const footer = document.querySelector("footer");
+
 function pegarMensagens() {
   const promessa = axios.get(
     "https://mock-api.driven.com.br/api/v6/uol/messages"
@@ -38,8 +40,12 @@ function mostrarMenssagens(resposta) {
             <span class='post'>${post}</span>
         </span>
     </li>`;
-    } else if ((tipo = "private_message" && destinatario !== meuNome)) {
-      console.log("tirei uma");
+    } else if (
+      tipo === "private_message" &&
+      destinatario !== meuNome &&
+      nome !== meuNome
+    ) {
+      mensagem = `<li class='hidden mensagem mensagem-${tipo} id${i}' ></li>`;
     } else {
       mensagem = `<li class='mensagem mensagem-${tipo} id${i}' > 
         <span class='textos-mensagem'>
@@ -65,28 +71,110 @@ function tirarMeuNome(meuNome) {
 }
 
 function mostrarDestinatarios() {
-  contatos.innerHTML = `
-    <li class="contato-modal" onclick="marcarDestinatario(this)">
+  const destinatarioMarcado = document.querySelector(".dest-marcado");
+  if (
+    destinatarioMarcado === null ||
+    destinatarioMarcado.parentElement.querySelector(".nome-modal").innerHTML ===
+      "Todos"
+  ) {
+    contatos.innerHTML = `
+    <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
       <div class="separa-modal">
         <ion-icon class="icone-modal" name="people"></ion-icon>
         <p class="nome-modal">Todos</p>
       </div>
       <ion-icon class="icone-check hidden dest-marcado" name="checkmark-outline"></ion-icon>
     </li>`;
-  for (let i = 0; i < destinatariosUnicos.length; i++) {
-    contato = `
-    <li class="contato-modal" onclick="marcarDestinatario(this)">
+    for (let i = 0; i < destinatariosUnicos.length; i++) {
+      contato = `
+    <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
       <div class="separa-modal">
         <ion-icon class="icone-modal" name="person-circle"></ion-icon>
         <p class="nome-modal">${destinatariosUnicos[i]}</p>
       </div>
       <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
     </li>`;
-    contatos.innerHTML = contatos.innerHTML + contato;
+      contatos.innerHTML = contatos.innerHTML + contato;
+    }
+  } else {
+    contatos.innerHTML = `
+    <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
+      <div class="separa-modal">
+        <ion-icon class="icone-modal" name="people"></ion-icon>
+        <p class="nome-modal">Todos</p>
+      </div>
+      <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
+    </li>`;
+    for (let i = 0; i < destinatariosUnicos.length; i++) {
+      if (
+        destinatariosUnicos[i] !==
+        destinatarioMarcado.parentElement.querySelector(".nome-modal").innerHTML
+      ) {
+        contato = `
+    <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
+      <div class="separa-modal">
+        <ion-icon class="icone-modal" name="person-circle"></ion-icon>
+        <p class="nome-modal">${destinatariosUnicos[i]}</p>
+      </div>
+      <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
+    </li>`;
+        contatos.innerHTML = contatos.innerHTML + contato;
+      } else {
+        contato = `
+    <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
+      <div class="separa-modal">
+        <ion-icon class="icone-modal" name="person-circle"></ion-icon>
+        <p class="nome-modal">${destinatariosUnicos[i]}</p>
+      </div>
+      <ion-icon class="icone-check hidden dest-marcado" name="checkmark-outline"></ion-icon>
+    </li>`;
+        contatos.innerHTML = contatos.innerHTML + contato;
+      }
+    }
+  }
+}
+
+function marcarDestinatario(contato) {
+  if (document.querySelector(".dest-marcado") !== null) {
+    document.querySelector(".dest-marcado").classList.remove("dest-marcado");
+  }
+  contato.querySelector(".icone-check").classList.add("dest-marcado");
+}
+
+function marcarModo(modo) {
+  if (document.querySelector(".modo-marcado") !== null) {
+    document.querySelector(".modo-marcado").classList.remove("modo-marcado");
+  }
+  modo.querySelector(".icone-check").classList.add("modo-marcado");
+}
+
+function atualizarAtivo() {
+  const nomeDestinaratio = document
+    .querySelector(".dest-marcado")
+    .parentElement.querySelector(".nome-modal").innerHTML;
+  const modo = document
+    .querySelector(".modo-marcado")
+    .parentElement.querySelector(".nome-modal").innerHTML;
+  footer.innerHTML = "";
+  if (nomeDestinaratio !== "Todos") {
+    footer.innerHTML = `
+    <div class="placeholder">
+      <input type="text" class="input" placeholder="Escreva aqui..." />
+      <p class="enviando">Enviando para ${nomeDestinaratio} (${modo})</p>
+    </div>
+    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>`;
+  } else {
+    footer.innerHTML = `
+    <div class="placeholder">
+      <input type="text" class="input" placeholder="Escreva aqui..." />
+      <p class="enviando">Enviando para Todos</p>
+    </div>
+    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>`;
   }
 }
 
 function iniciar() {
+  console.log(document.querySelector(".inicio-input").value);
   const nome = document.querySelector(".inicio-input").value;
   const requisicao = axios.post(
     "https://mock-api.driven.com.br/api/v6/uol/participants",
@@ -100,7 +188,7 @@ function podeEntrar() {
   document.querySelector(".inicio-container").classList.add("hidden");
   requisicaoContinua();
   pegarMensagens();
-  mostrarDestinatarios();
+  setTimeout(mostrarDestinatarios, 1000);
   setInterval(requisicaoContinua, 5000);
   setInterval(pegarMensagens, 3000);
   setInterval(mostrarDestinatarios, 10000);
@@ -169,18 +257,4 @@ function atualizarMensagens() {
 
 function toggleModal() {
   document.querySelector(".modal").classList.toggle("hidden");
-}
-
-function marcarDestinatario(contato) {
-  if (document.querySelector(".dest-marcado") !== null) {
-    document.querySelector(".dest-marcado").classList.remove("dest-marcado");
-  }
-  contato.querySelector(".icone-check").classList.add("dest-marcado");
-}
-
-function marcarModo(modo) {
-  if (document.querySelector(".modo-marcado") !== null) {
-    document.querySelector(".modo-marcado").classList.remove("modo-marcado");
-  }
-  modo.querySelector(".icone-check").classList.add("modo-marcado");
 }

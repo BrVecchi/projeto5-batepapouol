@@ -225,6 +225,13 @@ footer select:focus {
   outline: 0;
 }
 
+.enviando {
+  font-size: 14px;
+  font-weight: 300;
+  color: #505050;
+  margin-top: 10px;
+}
+
 .input {
   font-size: 18px;
   width: 100%;
