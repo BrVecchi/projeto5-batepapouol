@@ -174,7 +174,8 @@ function atualizarAtivo() {
 }
 
 function iniciar() {
-  console.log(document.querySelector(".inicio-input").value);
+  document.querySelector(".inicio-imagem").innerHTML =
+    "<img src='./imgs/loading-bar.gif' alt='logo batepapo Uol' />";
   const nome = document.querySelector(".inicio-input").value;
   const requisicao = axios.post(
     "https://mock-api.driven.com.br/api/v6/uol/participants",

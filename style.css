@@ -65,8 +65,16 @@ body {
   width: 100%;
 }
 
-.inicio-entrada {
+.troca {
   width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inicio-entrada {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

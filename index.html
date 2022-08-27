@@ -27,10 +27,12 @@
     <div class="inicio-imagem">
       <img src="./imgs/logo 2.png" alt="logo batepapo Uol" />
     </div>
-    <form class="inicio-entrada" action="javascript:iniciar();">
-      <input type="text" class="inicio-input" placeholder="Digite seu nome" />
-      <input type="submit" class="inicio-botao">
-    </form>
+    <div class="troca">
+      <form class="inicio-entrada" action="javascript:iniciar();">
+        <input type="text" class="inicio-input" placeholder="Digite seu nome" />
+        <input type="submit" class="inicio-botao">
+      </form>
+    </div>
   </div>
   <div class="modal hidden" onclick="toggleModal()">
     <div class="container-modal" onclick="toggleModal()">
@@ -70,11 +72,13 @@
     <input type="text" class="input" placeholder="Escreva aqui..." />
     <p class="enviando">Enviando para Todos</p>
   </form>
-  <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>
+  <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem(); limparForm();">
+  </ion-icon>
 </footer>
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 <script src="script.js"></script>
 
 </html>
