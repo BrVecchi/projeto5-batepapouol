@@ -258,3 +258,7 @@ function atualizarMensagens() {
 function toggleModal() {
   document.querySelector(".modal").classList.toggle("hidden");
 }
+
+function limparForm() {
+  document.querySelector(".input").value = "";
+}
