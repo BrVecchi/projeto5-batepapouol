@@ -107,6 +107,11 @@ body {
   cursor: pointer;
 }
 
+.gif {
+  width: 25%;
+  height: auto;
+}
+
 .mensagem {
   width: 100%;
   display: flex;
