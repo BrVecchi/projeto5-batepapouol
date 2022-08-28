@@ -18,6 +18,7 @@ function pegarMensagens() {
     "https://mock-api.driven.com.br/api/v6/uol/messages"
   );
   promessa.then(mostrarMenssagens);
+  promessa.then(mostrarDestinatarios);
 }
 
 function mostrarMenssagens(resposta) {
@@ -193,9 +194,8 @@ function iniciar() {
 
 function podeEntrar() {
   document.querySelector(".inicio-container").classList.add("hidden");
-  requisicaoContinua();
   pegarMensagens();
-  setTimeout(mostrarDestinatarios, 1000);
+  requisicaoContinua();
   setInterval(requisicaoContinua, 5000);
   setInterval(pegarMensagens, 3000);
   setInterval(mostrarDestinatarios, 10000);
