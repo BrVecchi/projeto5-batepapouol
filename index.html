@@ -70,11 +70,13 @@
 
 <footer>
   <form class="placeholder" action="javascript:enviarMensagem();  javascript:limparForm()">
-    <input type="text" class="input" placeholder="Escreva aqui..." />
-    <p class="enviando">Enviando para Todos</p>
+    <div class="textos-form">
+      <input type="text" class="input" placeholder="Escreva aqui..." />
+      <p class="enviando">Enviando para Todos</p>
+    </div>
+    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem(); limparForm();">
+    </ion-icon>
   </form>
-  <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem(); limparForm();">
-  </ion-icon>
 </footer>
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>

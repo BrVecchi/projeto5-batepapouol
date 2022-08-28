@@ -158,18 +158,24 @@ function atualizarAtivo() {
   footer.innerHTML = "";
   if (nomeDestinaratio !== "Todos") {
     footer.innerHTML = `
-    <div class="placeholder">
+    <form class="placeholder" action="javascript:enviarMensagem();  javascript:limparForm()">
+    <div class="textos-form">
       <input type="text" class="input" placeholder="Escreva aqui..." />
       <p class="enviando">Enviando para ${nomeDestinaratio} (${modo})</p>
     </div>
-    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>`;
+    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem(); limparForm();">
+    </ion-icon>
+  </form>`;
   } else {
     footer.innerHTML = `
-    <div class="placeholder">
+    <form class="placeholder" action="javascript:enviarMensagem();  javascript:limparForm()">
+    <div class="textos-form">
       <input type="text" class="input" placeholder="Escreva aqui..." />
       <p class="enviando">Enviando para Todos</p>
     </div>
-    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>`;
+    <ion-icon type="submit" class="icone-footer" name="paper-plane-outline" onclick="enviarMensagem(); limparForm();">
+    </ion-icon>
+  </form>`;
   }
 }
 
