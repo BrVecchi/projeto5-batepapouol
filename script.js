@@ -91,7 +91,7 @@ function mostrarDestinatarios() {
     <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
       <div class="separa-modal">
         <ion-icon class="icone-modal" name="person-circle"></ion-icon>
-        <p class="nome-modal">${destinatariosUnicos[i]}</p>
+        <p class="nome-modal" data-identifier="participant">${destinatariosUnicos[i]}</p>
       </div>
       <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
     </li>`;
@@ -115,7 +115,7 @@ function mostrarDestinatarios() {
     <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
       <div class="separa-modal">
         <ion-icon class="icone-modal" name="person-circle"></ion-icon>
-        <p class="nome-modal">${destinatariosUnicos[i]}</p>
+        <p class="nome-modal" data-identifier="participant">${destinatariosUnicos[i]}</p>
       </div>
       <ion-icon class="icone-check hidden" name="checkmark-outline"></ion-icon>
     </li>`;
@@ -125,7 +125,7 @@ function mostrarDestinatarios() {
     <li class="contato-modal" onclick="marcarDestinatario(this); atualizarAtivo()">
       <div class="separa-modal">
         <ion-icon class="icone-modal" name="person-circle"></ion-icon>
-        <p class="nome-modal">${destinatariosUnicos[i]}</p>
+        <p class="nome-modal" data-identifier="participant">${destinatariosUnicos[i]}</p>
       </div>
       <ion-icon class="icone-check hidden dest-marcado" name="checkmark-outline"></ion-icon>
     </li>`;
@@ -208,9 +208,7 @@ function requisicaoContinua() {
     "https://mock-api.driven.com.br/api/v6/uol/status",
     dados
   );
-  requisicao.then(function () {
-    console.log("tudo ok");
-  });
+  requisicao.then(function () {});
   requisicao.catch(statusErro);
 }
 
