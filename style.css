@@ -266,6 +266,7 @@ footer select:focus {
   border: none;
 }
 .input::placeholder {
+  width: 100%;
   color: black;
   font-weight: 400;
   font-style: italic;
